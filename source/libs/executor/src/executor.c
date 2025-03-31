@@ -631,6 +631,7 @@ void destroyOperatorParam(SOperatorParam* pParam) {
     return;
   }
 
+  qInfo("==================== param destroy %p ====================", pParam->value);
   // TODO
 }
 
@@ -642,7 +643,7 @@ void qDestroyOperatorParam(SOperatorParam* pParam) {
 }
 
 void qUpdateOperatorParam(qTaskInfo_t tinfo, void* pParam) {
-  destroyOperatorParam(((SExecTaskInfo*)tinfo)->pOpParam);
+  qDestroyOperatorParam(((SExecTaskInfo*)tinfo)->pOpParam);
   ((SExecTaskInfo*)tinfo)->pOpParam = pParam;
   ((SExecTaskInfo*)tinfo)->paramSet = false;
 }

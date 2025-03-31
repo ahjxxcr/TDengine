@@ -9628,6 +9628,7 @@ int32_t tDeserializeSOperatorParam(SDecoder *pDecoder, SOperatorParam *pOpParam)
   switch (pOpParam->opType) {
     case QUERY_NODE_PHYSICAL_PLAN_TABLE_SCAN: {
       pOpParam->value = taosMemoryMalloc(sizeof(STableScanOperatorParam));
+      uInfo("==================== param malloc %p ====================", pOpParam->value);
       if (NULL == pOpParam->value) {
         TAOS_CHECK_RETURN(terrno);
       }

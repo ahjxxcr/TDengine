@@ -1193,8 +1193,9 @@ void freeOperatorParamImpl(SOperatorParam* pParam, SOperatorParamType type) {
   }
 
   taosArrayDestroy(pParam->pChildren);
+  pParam->pChildren = NULL;
 
-  taosMemoryFree(pParam->value);
+  taosMemoryFreeClear(pParam->value);
 
   taosMemoryFree(pParam);
 }
@@ -1233,6 +1234,7 @@ void freeMergeJoinNotifyOperatorParam(SOperatorParam* pParam) { freeOperatorPara
 void freeTableScanGetOperatorParam(SOperatorParam* pParam) {
   STableScanOperatorParam* pTableScanParam = (STableScanOperatorParam*)pParam->value;
   taosArrayDestroy(pTableScanParam->pUidList);
+  pTableScanParam->pUidList = NULL;
   if (pTableScanParam->pOrgTbInfo) {
     taosArrayDestroy(pTableScanParam->pOrgTbInfo->colMap);
     taosMemoryFreeClear(pTableScanParam->pOrgTbInfo);
@@ -1251,6 +1253,7 @@ void freeOpParamItem(void* pItem) {
 void freeVirtualTableScanGetOperatorParam(SOperatorParam* pParam) {
   SVTableScanOperatorParam* pVTableScanParam = (SVTableScanOperatorParam*)pParam->value;
   taosArrayDestroyEx(pVTableScanParam->pOpParamArray, freeOpParamItem);
+  pVTableScanParam->pOpParamArray = NULL;
   freeOperatorParamImpl(pParam, OP_GET_PARAM);
 }
 
